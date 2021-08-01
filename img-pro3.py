@@ -1,31 +1,6 @@
-#
-#This script takes inputs N,M,S, and two .png files (of the same height and width) - one RGB and one in black and white
-#This script then takes N patches of MxM size from random locations in the RGB file based on the control file in black and white
-#(the randomness of the locations is limited by the imposed ratio S of center black pixels to center white pixels)
-#
-
 from PIL import Image, ImageDraw, ImageEnhance
 import random
 import math
-
-
-N = int(input("What is N? (number of patches, integer > 0) "))
-M = int(input("What is M? (patch size, odd integer > 0) "))
-S = float(input("What is S? (ratio of center black:white pixels, value between 0-1, inclusive) "))
-orgpath_rgb = input("What is the RGB filename? (you can use 'default') ")
-orgpath_bw = input("What is the Black/White filename? (you can use 'default') ")
-
-#N = 100
-#M = 201
-#S = .78
-if orgpath_rgb == 'default':
-	orgpath_rgb = 'org1.png'
-if orgpath_bw == 'default':
-	orgpath_bw = 'org2.png'
-
-image_rgb = Image.open(orgpath_rgb)
-
-image_bw = Image.open(orgpath_bw)
 
 def find_white_coordinates(image):
 	list = []
@@ -53,7 +28,7 @@ def create_patches(amount,size,accuracy,image,white_coord):
 		track_w = 0
 		for y_coord in range(y-math.floor(size/2),y+math.ceil(size/2)): # traverse the relevant area in the RBG .png file
 			for x_coord in range(x-math.floor(size/2),x+math.ceil(size/2)):
-				if 0<=y_coord<height and 0<=x_coord<width: # if pixel lies within the original RGB .png file, put it in the patch, else make it black if outside the edges
+				if 0<=y_coord<height and 0<=x_coord<width: # if pixel lies within the original RGB .png file, put it in the patch, else leave it black if outside the edges
 					r,g,b = image_data[y_coord,x_coord]
 					blank_image.putpixel((track_h,track_w),(r,g,b))
 				track_w+=1
@@ -93,8 +68,19 @@ def save_patches(patches):
 		image.save(str(save_num)+'.png')
 		save_num+=1
 		
+N = int(input("What is N? (number of patches, integer > 0) "))
+M = int(input("What is M? (patch size, odd integer > 0) "))
+S = float(input("What is S? (ratio of center black:white pixels, value between 0-1, inclusive) "))
+orgpath_rgb = input("What is the RGB filename? (you can use 'default') ")
+orgpath_bw = input("What is the Black/White filename? (you can use 'default') ")
 
+if orgpath_rgb == 'default':
+	orgpath_rgb = 'org1.png'
+if orgpath_bw == 'default':
+	orgpath_bw = 'org2.png'
 
+image_rgb = Image.open(orgpath_rgb)
+image_bw = Image.open(orgpath_bw)
 
 white_coordinates = find_white_coordinates(image_bw)
 
