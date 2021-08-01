@@ -55,9 +55,7 @@ def create_patches(amount,size,accuracy,image,white_coord):
 			for x_coord in range(x-math.floor(size/2),x+math.ceil(size/2)):
 				if 0<=y_coord<height and 0<=x_coord<width: # if pixel lies within the original RGB .png file, put it in the patch, else make it black if outside the edges
 					r,g,b = image_data[y_coord,x_coord]
-				else:
-					r,g,b=0,0,0
-				blank_image.putpixel((track_h,track_w),(r,g,b))
+					blank_image.putpixel((track_h,track_w),(r,g,b))
 				track_w+=1
 			track_h+=1
 			track_w=0
@@ -82,9 +80,7 @@ def create_patches(amount,size,accuracy,image,white_coord):
 			for x_coord in range(x-math.floor(size/2),x+math.ceil(size/2)):
 				if 0<=y_coord<height and 0<=x_coord<width:
 					r,g,b = image_data[y_coord,x_coord]
-				else:
-					r,g,b=0,0,0
-				blank_image.putpixel((track_h,track_w),(r,g,b))
+					blank_image.putpixel((track_h,track_w),(r,g,b))
 				track_w+=1
 			track_h+=1
 			track_w=0
